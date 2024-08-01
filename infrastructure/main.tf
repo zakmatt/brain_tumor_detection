@@ -22,9 +22,43 @@ module "s3" {
 resource "aws_vpc" "mlflow_vpc" {
   cidr_block = "10.0.0.0/16"
 
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+
   tags = {
     Name = "main-vpc"
   }
+}
+
+resource "aws_internet_gateway" "mlflow_igw" {
+  vpc_id = aws_vpc.mlflow_vpc.id
+  
+  tags = {
+    Name = "mlflow-igw"
+  }
+}
+
+resource "aws_route_table" "mlflow_route_table" {
+  vpc_id = aws_vpc.mlflow_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.mlflow_igw.id
+  }
+
+  tags = {
+    Name = "mlflow-route-table"
+  }
+}
+
+resource "aws_route_table_association" "mlflow_subnet_1_route_association" {
+  subnet_id      = aws_subnet.mlflow_subnet_1.id
+  route_table_id = aws_route_table.mlflow_route_table.id
+}
+
+resource "aws_route_table_association" "mlflow_subnet_2_route_association" {
+  subnet_id      = aws_subnet.mlflow_subnet_2.id
+  route_table_id = aws_route_table.mlflow_route_table.id
 }
 
 resource "aws_subnet" "mlflow_subnet_1" {
@@ -57,7 +91,7 @@ resource "aws_security_group" "rds_sg" {
     from_port   = 5432
     to_port     = 5432
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${var.my_public_ip}/32"]
   }
 
   egress {

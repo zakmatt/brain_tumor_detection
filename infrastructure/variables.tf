@@ -50,6 +50,13 @@ variable "rds_password" {
   default     = "admin123"
 }
 
+# ============ IP Address ============
+
+variable "my_public_ip" {
+  description = "Public IP address of the user"
+  type        = string
+}
+
 # ============ General ============
 
 variable "tags" {
