@@ -20,6 +20,9 @@ else
   exit 1
 fi
 
+export MY_PUBLIC_IP=$(curl -s ifconfig.me)
+echo "My public IP is $MY_PUBLIC_IP"
+
 # Navigate to the Terraform directory
 cd infrastructure || return
 
@@ -27,7 +30,7 @@ cd infrastructure || return
 terraform init
 
 # Apply Terraform configuration
-terraform apply -var-file=$VAR_FILE -auto-approve
+terraform apply -var-file=$VAR_FILE -var="my_public_ip=$MY_PUBLIC_IP" -auto-approve
 
 ERROR_CODE=$?
 

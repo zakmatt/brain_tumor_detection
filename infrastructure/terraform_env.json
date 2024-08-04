@@ -1,6 +1,6 @@
 {
   "SAVE_BUCKET": "dev-brain-tumor-detection-model-storage-bucket",
-  "RDS_ENDPOINT": "terraform-20240728225727256200000001.cfmikes0cgsk.eu-west-1.rds.amazonaws.com:5432",
+  "RDS_ENDPOINT": "terraform-20240801183711671000000001.cfmikes0cgsk.eu-west-1.rds.amazonaws.com:5432",
   "RDS_DB_NAME": "devdb",
   "RDS_USERNAME": "devadmin",
   "RDS_PASSWORD": "devpassword123"

@@ -3,6 +3,11 @@ url = "https://pypi.org/simple/"
 verify_ssl = false
 name = "pip_conf_index_global"
 
+[[source]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cpu"
+verify_ssl = true
+
 [packages]
 pandas = "*"
 numpy = "*"
@@ -10,8 +15,17 @@ matplotlib = "*"
 seaborn = "*"
 jupyter = "*"
 transformers = "*"
+opencv-python = "*"
+torch = "*"
+torchvision = "*"
+torchaudio = "*"
+mlflow = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.11"
+
+[pipenv]
+allow_prereleases = true

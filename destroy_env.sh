@@ -20,6 +20,9 @@ else
   exit 1
 fi
 
+export MY_PUBLIC_IP=$(curl -s ifconfig.me)
+echo "My public IP is $MY_PUBLIC_IP"
+
 # Navigate to the Terraform directory
 cd infrastructure
 
@@ -27,7 +30,7 @@ cd infrastructure
 terraform init
 
 # Destroy Terraform configuration
-terraform destroy -var-file=$VAR_FILE -auto-approve
+terraform destroy -var-file=$VAR_FILE -var="my_public_ip=$MY_PUBLIC_IP" -auto-approve
 
 # Print confirmation
 echo "Destroyed infrastructure for environment: $ENV"
